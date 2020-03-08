@@ -84,7 +84,7 @@ public class RobotContainer {
     new JoystickButton(drivestation, 8).whenHeld(new InstantCommand(()->m_aimer.resetAimer()));
     new JoystickButton(joystick, 11).whenPressed(new InstantCommand(()->m_climber.hookup(), m_climber)).whenReleased(()->m_climber.hookdown());
     new JoystickButton(joystick, 12).whenPressed(new InstantCommand(()->m_climber.rise(), m_climber));
-    new JoystickButton(joystick, 10).whenPressed(new RunCommand(()->m_climber.botclimb(drivestation.getY()), m_climber)).whenReleased(new InstantCommand(()->m_climber.botstopclimb(), m_climber));
+    new JoystickButton(joystick, 10).whenPressed(new RunCommand(()->m_climber.botclimb(drivestation.getY(),drivestation.getRawAxis(5)), m_climber)).whenReleased(new InstantCommand(()->m_climber.botstopclimb(), m_climber));
     new JoystickButton(joystick, 9).whenPressed(new InstantCommand(()->m_climber.down(), m_climber));
    /* new JoystickButton(joystick,     Button.emergencyintake)      .whenPressed(new InstantCommand(m_intake::intake,m_intake)).whenReleased(new InstantCommand(m_intake::intakestop,m_intake));
     new JoystickButton(joystick,     Button.emergencyarmup)       .whenPressed(new InstantCommand(m_arm::armup,m_arm)).whenReleased(new InstantCommand(m_arm::armstop,m_arm));

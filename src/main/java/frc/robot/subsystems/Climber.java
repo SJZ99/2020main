@@ -40,8 +40,8 @@ public class Climber extends SubsystemBase {
     compressor.setClosedLoopControl(true);
     climbermas.configFactoryDefault();
     climberfol.configFactoryDefault();
-    climberfol.follow(climbermas);
-    climberfol.setInverted(InvertType.OpposeMaster);
+   // climberfol.follow(climbermas);
+    climberfol.setInverted(true);
   }
 
   public void rise(){
@@ -61,9 +61,9 @@ public class Climber extends SubsystemBase {
   public void hookdown(){
     hooksSolenoid.set(false);
   }
-  public void botclimb(double out){
-    climbermas.set(ControlMode.PercentOutput,out);
-
+  public void botclimb(double outm,double outf){
+    climbermas.set(ControlMode.PercentOutput,outm);
+    climberfol.set(ControlMode.PercentOutput,-outf);
   }
   
   public void botstopclimb(){
