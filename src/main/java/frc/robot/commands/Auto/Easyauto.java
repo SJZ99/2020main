@@ -43,7 +43,8 @@ public class Easyauto extends SequentialCommandGroup {
       super(
         new Aim(turret, vision).withTimeout(1),new DistShooter(shooter).withTimeout(2),
         new RunCommand(()->drivetrain.curvaturedrive(0.2, 0, false),drivetrain).withTimeout(1)
-        
+        //許展玉
+
       );
       
     }
