@@ -32,7 +32,7 @@ public class Shooter extends SubsystemBase {
   // private WPI_VictorSPX widefol = new WPI_VictorSPX(PowCon.widefolID);
   private DigitalInput arr = new DigitalInput(3);
 
-  // private WPI_VictorSPX widefol = new WPI_VictorSPX(PowCon.widefolID);
+    private WPI_VictorSPX widefol = new WPI_VictorSPX(PowCon.widefolID);
 
   private double setVel = 0, dist = 0;
 
@@ -42,8 +42,8 @@ public class Shooter extends SubsystemBase {
   public Shooter() {
     setmotor.setmotor(flywheel, supplyCurrentLimitConfiguration, PowCon.kP, PowCon.kF, InvertType.None, 0, 1, 10);
     flywheel.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 10);
-    // widefol.follow(widemas);
-    // widefol.setInverted(InvertType.OpposeMaster);
+    widefol.follow(widemas);
+     widefol.setInverted(InvertType.FollowMaster);
     // widefol.setInverted(InvertType.OpposeMaster);
 
   }
