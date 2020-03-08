@@ -23,8 +23,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Climber extends SubsystemBase {
   private WPI_VictorSPX climbermas = new WPI_VictorSPX(CliCon.climbermasID);
   private WPI_VictorSPX climberfol = new WPI_VictorSPX(CliCon.climberfolID);
-  private Solenoid hooksSolenoid = new Solenoid(CliCon.hookID);
-  private DoubleSolenoid riseSolenoid = new DoubleSolenoid(CliCon.riseID[0],CliCon.riseID[1]);
+  private Solenoid hooksSolenoid = new Solenoid(2);
+  private DoubleSolenoid riseSolenoid = new DoubleSolenoid(0,1);
   private Compressor compressor = new Compressor();
   private String climstatus = "unRised";
   //Hookup 鉤子伸起
