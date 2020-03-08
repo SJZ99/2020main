@@ -20,17 +20,19 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 
 public class TrajectoryMaker extends SubsystemBase {
-  Trajectory trajectory = null;
+  static Trajectory trajectory = null;
 
   public TrajectoryMaker(String path) {
-    try{
+
+  }
+
+  public static Trajectory getTrajectory(String path) {
+    try {
       Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(path);
-      trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);  
-    }catch(IOException g){
+      trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+    } catch (IOException g) {
       System.out.print(g.getMessage());
     }
-  }
-  public Trajectory getTrajectory(){
     return trajectory;
   }
 

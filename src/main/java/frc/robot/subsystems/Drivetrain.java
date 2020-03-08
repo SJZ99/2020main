@@ -122,14 +122,27 @@ public class Drivetrain extends SubsystemBase {
     // return Rotation2d.fromDegrees(-ahrs.getAngle());
   }
 
-  public void Trainit() throws IOException {
+  public void Trainit(String path) throws IOException {
     reset();
-    Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(DrCon.MidnitToCP);
-    Trajectory trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-    setOdmetry(trajectory.getInitialPose());
-    SmartDashboard.putNumber("TotalTime", trajectory.getTotalTimeSeconds());
+    setOdmetry(TrajectoryMaker.getTrajectory(path).getInitialPose());
+    SmartDashboard.putNumber("TotalTime", TrajectoryMaker.getTrajectory(path).getTotalTimeSeconds());
     
   }
+  
+    /**
+     * set motor output,
+     * 
+     * @param left    left velocity
+     * @param right   right velocity
+     */
+    public void setOutput(double left, double right) {
+      leftmas.set(ControlMode.Velocity, left / DrCon.distantsPerPulse);
+      rightmas.set(ControlMode.Velocity, right / DrCon.distantsPerPulse);
+      // leftmotor.set(ControlMode.PercentOutput, 0);
+      // rightmotor.set(ControlMode.PercentOutput, 0);
+      SmartDashboard.putNumber("leftOutput ", left / DrCon.distantsPerPulse);
+      SmartDashboard.putNumber("rightOutput", right / DrCon.distantsPerPulse);
+    }
   
   public DifferentialDriveWheelSpeeds getSpeed() {
     SmartDashboard.putNumber("leftRate", leftmas.getSelectedSensorVelocity() * DrCon.distantsPerPulse);

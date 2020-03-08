@@ -12,6 +12,7 @@
 
 package frc.robot.commands.Auto;
 
+import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
@@ -19,11 +20,12 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.Constants.DrCon;
 import frc.robot.commands.Aim;
 import frc.robot.commands.DistShooter;
-import frc.robot.commands.FastShoot;
 import frc.robot.commands.Intakecom;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.TrajectoryMaker;
 import frc.robot.subsystems.Powercell.Aimer;
 import frc.robot.subsystems.Powercell.Arm;
 import frc.robot.subsystems.Powercell.Intake;
@@ -42,7 +44,14 @@ public class Easyauto extends SequentialCommandGroup {
 
 
       super(
-        new Aim(turret, vision).withTimeout(1),new DistShooter(shooter).withTimeout(2),new RamseteCommand(,drivetrain::getPose, follower, kinematics, outputMetersPerSecond, requirements)
+        new Aim(turret, vision).withTimeout(1),
+        new DistShooter(shooter).withTimeout(4),
+        new InstantCommand(()->intake.intake(),intake),
+        new RamseteCommand(TrajectoryMaker.getTrajectory(DrCon.LeftInitToCP),drivetrain::getpose2d, new RamseteController(2.0, 0.7), drivetrain.getKinematics(),drivetrain::setOutput, drivetrain),
+        new Aim(turret, vision).withTimeout(1),
+        new DistShooter(shooter).withTimeout(4),
+        new InstantCommand(()->intake.intakestop(),intake)
+        
         
 
       );
