@@ -7,6 +7,9 @@
 
 package frc.robot.subsystems;
 
+import java.io.IOException;
+import java.nio.file.Path;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
@@ -15,20 +18,33 @@ import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants.DrCon;
 import frc.robot.Setmotor;
 
 public class Drivetrain extends SubsystemBase {
+  
+
+  private DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(DrCon.wheelPitch); // 輪子寬度
+  private DifferentialDriveOdometry odmetry = new DifferentialDriveOdometry(getHeading());
   private SupplyCurrentLimitConfiguration supplyCurrentLimitConfiguration = new SupplyCurrentLimitConfiguration(true, 40, 50, 1);
   private Setmotor setmotor = new Setmotor();
+  
+  private Pose2d pose = new Pose2d();
   private WPI_TalonFX leftmas = new WPI_TalonFX(DrCon.LeftmasterID);
   private WPI_TalonFX leftfol= new WPI_TalonFX(DrCon.LeftfollowerID);
   private WPI_TalonFX rightmas = new WPI_TalonFX(DrCon.RightmasterID);
@@ -36,8 +52,8 @@ public class Drivetrain extends SubsystemBase {
   
  // private AHRS ahrs;
 
-  //private AHRS ahrs = new AHRS(SPI.Port.kMXP);
-  private double disttar,a=0.3,i=0;
+  private AHRS ahrs = new AHRS(SPI.Port.kMXP);
+  private double disttar,a=0.3,angle=0;
   private double m_quickStopAccumulator = 0,leftout=0,rightout=0;
 
   /**
@@ -85,6 +101,103 @@ public class Drivetrain extends SubsystemBase {
 
   }
  
+  
+  public void reset() {
+    ahrs.reset();
+  }
+
+  /**
+   * set odmetry,let the starting position of the robot be the starting point of
+   * the trajectory
+   * 
+   * @param pose2d the trajectory origin
+   */
+  public void setOdmetry(Pose2d pose2d) {
+    odmetry.resetPosition(pose2d, pose2d.getRotation());
+  }
+
+  public Rotation2d getHeading() {
+    return Rotation2d.fromDegrees(angle);
+
+    // return Rotation2d.fromDegrees(-ahrs.getAngle());
+  }
+
+  public void Trainit() throws IOException {
+    reset();
+    Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(DrCon.path);
+    Trajectory trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+    setOdmetry(trajectory.getInitialPose());
+    SmartDashboard.putNumber("TotalTime", trajectory.getTotalTimeSeconds());
+    
+  }
+  
+  public DifferentialDriveWheelSpeeds getSpeed() {
+    SmartDashboard.putNumber("leftRate", leftmas.getSelectedSensorVelocity() * DrCon.distantsPerPulse);
+    SmartDashboard.putNumber("rightRate", rightmas.getSelectedSensorVelocity() * DrCon.distantsPerPulse);
+    return new DifferentialDriveWheelSpeeds(
+      leftmas.getSelectedSensorVelocity() * DrCon.distantsPerPulse, 
+      rightmas.getSelectedSensorVelocity() * DrCon.distantsPerPulse
+      );
+  }
+  
+  
+  /**
+   * Provide kinematics object, contain track width
+   * 
+   * @return kinematics
+   */
+  public  DifferentialDriveKinematics getKinematics() {
+    return kinematics;
+  }
+
+  /**
+   * Provide current pose, update from Periodic
+   * 
+   * @return current pose
+   */
+  public Pose2d getpose2d(){
+    return pose;
+  }
+  /**
+   * get "X" from odmetry
+   * 
+   * @return current "X"
+   */
+  public double getX(){
+    return odmetry.getPoseMeters().getTranslation().getX();
+  }
+  /**
+   * get "Y" from odmetry
+   * 
+   * @return current "Y"
+   */
+  public double getY(){
+    return odmetry.getPoseMeters().getTranslation().getY();
+  }
+  public void setmotor(){
+    rightmas.setSelectedSensorPosition(0);
+    leftmas.setSelectedSensorPosition(0);
+
+    rightmas.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor,0 ,0);
+    leftmas.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor,0 ,0);
+    rightfol.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor,0 ,0);
+    leftfol.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor,0 ,0);
+
+    rightmas.configVoltageCompSaturation(10);
+    leftmas.configVoltageCompSaturation(10);
+    rightmas.enableVoltageCompensation(true);
+    leftmas.enableVoltageCompensation(true);
+  }
+
+  public void message(){
+    SmartDashboard.putNumber("x", getX());
+    SmartDashboard.putNumber("Y", getY());
+    //distants
+    
+    SmartDashboard.putNumber("leftDistants", leftmas.getSelectedSensorPosition() * DrCon.distantsPerPulse);
+    SmartDashboard.putNumber("rightDistants", rightmas.getSelectedSensorPosition() * DrCon.distantsPerPulse);
+    //SmartDashboard.putNumber("Yaw", ahrs.getYaw());
+  }
   public boolean drivedistend(){
     return Math.abs(disttar-leftmas.getSelectedSensorPosition(0))<500;
   }

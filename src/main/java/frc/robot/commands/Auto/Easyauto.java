@@ -14,6 +14,7 @@ package frc.robot.commands.Auto;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
@@ -41,9 +42,8 @@ public class Easyauto extends SequentialCommandGroup {
 
 
       super(
-        new Aim(turret, vision).withTimeout(1),new DistShooter(shooter).withTimeout(2),
-        new RunCommand(()->drivetrain.curvaturedrive(0.2, 0, false),drivetrain).withTimeout(1)
-        //許展玉
+        new Aim(turret, vision).withTimeout(1),new DistShooter(shooter).withTimeout(2),new RamseteCommand(,drivetrain::getPose, follower, kinematics, outputMetersPerSecond, requirements)
+        
 
       );
       
