@@ -124,7 +124,7 @@ public class Drivetrain extends SubsystemBase {
 
   public void Trainit() throws IOException {
     reset();
-    Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(DrCon.path);
+    Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(DrCon.MidnitToCP);
     Trajectory trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
     setOdmetry(trajectory.getInitialPose());
     SmartDashboard.putNumber("TotalTime", trajectory.getTotalTimeSeconds());
