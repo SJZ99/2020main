@@ -39,7 +39,7 @@ public final class Constants {
         public static final int falconCPR =2048; 
         public static final int maxspeed=10000,maxacc=5000;
         public static final double enoderunit = 2048/(0.1524*Math.PI);
-        public static final String LeftInitToCP = "C:\Users\ASUS\Desktop\2020robot2.0-master\src\main\deploy\output\LeftInitToCP.wpilib.json";
+        public static final String LeftInitToCP = "output/LeftInitToCP.wpilib.json";
         public static final String MidnitToCP = "output/path.wpilib.json";
         //Attributes
         public static final double wheelDiamete = 0.1524;
