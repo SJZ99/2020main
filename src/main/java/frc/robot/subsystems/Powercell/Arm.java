@@ -26,15 +26,16 @@ public class Arm extends SubsystemBase {
 
   public Arm() {
     arm.setInverted(false);
+  
   }
   public void armdown(){
    // if(getarmstatus()!="Down"){
-    arm.set(ControlMode.PercentOutput,0.6);
+    arm.set(ControlMode.PercentOutput,0.3);
   //}
   }
   public void armup(){
     //if(getarmstatus()!="UP"){
-    arm.set(ControlMode.PercentOutput,-0.6);
+    arm.set(ControlMode.PercentOutput,-0.75);
   //}
     
   }
