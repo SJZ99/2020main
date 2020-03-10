@@ -11,7 +11,6 @@ package frc.robot.commands.Auto;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import frc.robot.commands.Aim;
-import frc.robot.commands.FastShoot;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.Powercell.Shooter;
@@ -27,7 +26,7 @@ public class Easyauto2 extends SequentialCommandGroup {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     
-    super(new FastShoot(shooter),
+    super(
     new StartEndCommand(()->drivetrain.drivedist(1),()->drivetrain.drivedist(0),
     drivetrain).withInterrupt(() -> drivetrain.drivedistend()));
     
