@@ -100,6 +100,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return null;
+    return new Easyauto2(m_shooter,m_drivetrain,m_vision);
   }
 }

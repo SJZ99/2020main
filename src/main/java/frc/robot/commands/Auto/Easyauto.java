@@ -41,7 +41,7 @@ public class Easyauto extends SequentialCommandGroup {
 
     super(
       new ParaShot(turret,vision,aimer,shooter),
-     new RunCommand(()->drivetrain.curvaturedrive(0.2, 0, false),drivetrain).withTimeout(1)
+      new RunCommand(()->drivetrain.curvaturedrive(0.2, 0, false),drivetrain).withTimeout(1)
       //new InstantCommand(()->intake.intake(),intake),
     ///  new InstantCommand(()->arm.armdown(),arm),
      /// new WaitCommand(2).andThen(

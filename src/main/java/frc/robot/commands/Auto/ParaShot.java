@@ -25,9 +25,7 @@ public class ParaShot extends ParallelCommandGroup {
    */
   public ParaShot(Turret turret,Vision vision,Aimer aimer,Shooter shooter) {
 
-    super(new AutoAim(turret, vision, aimer).
-    andThen(new AutoShot(shooter)).withTimeout(3),
-    new InstantCommand(()->shooter.flywheelspinup(12000),shooter));
+    super(new AutoAim(turret, vision, aimer).andThen(new AutoShot(shooter)).withTimeout(3), new InstantCommand(()->shooter.flywheelspinup(12000),shooter));
 
 
     // Add your commands in the super() call, e.g.
