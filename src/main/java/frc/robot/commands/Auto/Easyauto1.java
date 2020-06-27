@@ -33,6 +33,7 @@ public class Easyauto1 extends SequentialCommandGroup {
     super(
       new InstantCommand(()->SmartDashboard.putString("Auto Mode", "trajectory")),
       Robot.trajectoryFactory.getRamseteCommand(new Trajectory(Arrays.asList(new Trajectory.State()))));
-    
+        
+//pathMaker.getTrajectory()
   }
 }
