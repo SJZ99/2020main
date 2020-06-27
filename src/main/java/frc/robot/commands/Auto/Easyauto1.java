@@ -8,11 +8,17 @@
 
 package frc.robot.commands.Auto;
 
+import java.io.IOException;
+import java.util.Arrays;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Robot;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
+import frc.robot.subsystems.Trajectory.PathMaker;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -20,21 +26,13 @@ import frc.robot.subsystems.Vision;
 public class Easyauto1 extends SequentialCommandGroup {
   /**
    * Creates a new Easyauto.
+   * 
+   * @throws IOException
    */
-  public Easyauto1(Drivetrain drivetrain,Vision vision) {
-    super(new InstantCommand(()->SmartDashboard.putString("Auto Mode", "EasyAuto1")));
-    
-    // Add your commands in the super() call, e.g.
-    // super(new FooCommand(), new BarCommand());
-    /*
+  public Easyauto1(Drivetrain drivetrain, Vision vision) throws IOException {
     super(
-    new Aim(powercell, vision, drivetrain),
-    new Shoot(powercell),
-    new InstantCommand(()->powercell.intake(), powercell),
-    new StartEndCommand(()->drivetrain.drivedist(-3), ()->drivetrain.drivedist(2),drivetrain).withInterrupt(() -> drivetrain.drivedistend()),
-    new Aim(powercell, vision, drivetrain),
-    new Shoot(powercell)
-    );*/
+      new InstantCommand(()->SmartDashboard.putString("Auto Mode", "trajectory")),
+      Robot.trajectoryFactory.getRamseteCommand(new Trajectory(Arrays.asList(new Trajectory.State()))));
     
   }
 }

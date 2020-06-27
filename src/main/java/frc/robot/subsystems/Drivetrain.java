@@ -14,8 +14,7 @@ import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.SPI;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpiutil.math.MathUtil;
@@ -23,18 +22,42 @@ import frc.robot.Constants.DrCon;
 import frc.robot.Setmotor;
 
 public class Drivetrain extends SubsystemBase {
-  private SupplyCurrentLimitConfiguration supplyCurrentLimitConfiguration = new SupplyCurrentLimitConfiguration(true, 40, 50, 1);
-  private Setmotor setmotor = new Setmotor();
-  private WPI_TalonFX leftmas = new WPI_TalonFX(DrCon.LeftmasterID);
-  private WPI_TalonFX leftfol= new WPI_TalonFX(DrCon.LeftfollowerID);
-  private WPI_TalonFX rightmas = new WPI_TalonFX(DrCon.RightmasterID);
-  private WPI_TalonFX rightfol = new WPI_TalonFX(DrCon.RightfollowerID);
- // private AHRS ahrs;
+  SupplyCurrentLimitConfiguration supplyCurrentLimitConfiguration = new SupplyCurrentLimitConfiguration(true, 40, 50, 1);
+  Setmotor setmotor = new Setmotor();
+  WPI_TalonFX leftmas = new WPI_TalonFX(DrCon.LeftmasterID);
+  WPI_TalonFX leftfol= new WPI_TalonFX(DrCon.LeftfollowerID);
+  WPI_TalonFX rightmas = new WPI_TalonFX(DrCon.RightmasterID);
+  WPI_TalonFX rightfol = new WPI_TalonFX(DrCon.RightfollowerID);
 
-  //private AHRS ahrs = new AHRS(SPI.Port.kMXP);
   private double disttar,a=0.3,i=0;
   private double m_quickStopAccumulator = 0,leftout=0,rightout=0;
 
+  
+  public void reset(){
+    leftmas.setSelectedSensorPosition(0,0, 10);
+    rightmas.setSelectedSensorPosition(0,0, 10);
+  }
+  public double getLeftVelocity(){
+    return leftmas.getSelectedSensorVelocity() * 0.1524 * Math.PI / 2048 / 9.7;
+  }
+  public double getRightVelocity(){
+    return rightmas.getSelectedSensorVelocity() * 0.1524 * Math.PI / 2048 / 9.7;
+  }
+  /**
+     * set motor output, change "voltage" to "PercentOutput"
+     * 
+     * @param leftVolts    left voltages
+     * @param rightVolts   right voltages
+     */
+    public void setOutput(double leftVolts, double rightVolts) {
+      leftmas.set(ControlMode.PercentOutput, leftVolts / 12);
+      rightmas.set(ControlMode.PercentOutput, rightVolts / 12);
+      // leftmotor.set(ControlMode.PercentOutput, 0);
+      // rightmotor.set(ControlMode.PercentOutput, 0);
+      SmartDashboard.putNumber("leftOutput ", leftVolts /12);
+      SmartDashboard.putNumber("rightOutput", rightVolts / 12);
+    }
+ 
   /**
    * Creates a new Drivetrain.
    */

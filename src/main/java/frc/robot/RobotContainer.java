@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import java.io.IOException;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -33,34 +35,38 @@ import frc.robot.subsystems.Powercell.Intake;
 import frc.robot.subsystems.Powercell.Shooter;
 import frc.robot.subsystems.Powercell.Turret;
 import frc.robot.subsystems.Vision;
+
 /**
- * This class is where the bulk of the robot should be declared.  Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
- * (including subsystems, commands, and button mappings) should be declared here.
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a "declarative" paradigm, very little robot logic should
+ * actually be handled in the {@link Robot} periodic methods (other than the
+ * scheduler calls). Instead, the structure of the robot (including subsystems,
+ * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final Drivetrain       m_drivetrain       = new Drivetrain();
-  private final Turret           m_turret           = new Turret();
-  private final Intake           m_intake           = new Intake();
-  private final Shooter          m_shooter          = new Shooter();
-  private final Aimer            m_aimer            = new Aimer();
-  private final Arm              m_arm              = new Arm();
-  private final Vision           m_vision           = new Vision();
-  private final Joystick         joystick           = new Joystick(0);
-  private final Joystick         drivestation       = new Joystick(2);
+  public static Drivetrain drivetrain = new Drivetrain();
+  private final Turret m_turret = new Turret();
+  private final Intake m_intake = new Intake();
+  private final Shooter m_shooter = new Shooter();
+  private final Aimer m_aimer = new Aimer();
+  private final Arm m_arm = new Arm();
+  private final Vision m_vision = new Vision();
+  private final Joystick joystick = new Joystick(0);
+  private final Joystick drivestation = new Joystick(2);
   private final SendableChooser<Command> m_chooser = new SendableChooser<>();
-  private final Easyauto  m_easyauto  = new  Easyauto(m_turret,m_drivetrain,m_vision,m_intake,m_shooter,m_aimer,m_arm);
-  private final Easyauto1 m_easyauto1 = new Easyauto1(m_drivetrain,m_vision);
-  private final Easyauto2 m_easyauto2 = new Easyauto2(m_shooter,m_drivetrain,m_vision);
+  private final Easyauto m_easyauto = new Easyauto(m_turret, drivetrain, m_vision, m_intake, m_shooter, m_aimer, m_arm);
+  private final Easyauto1 m_easyauto1;
+  private final Easyauto2 m_easyauto2 = new Easyauto2(m_shooter, drivetrain, m_vision);
 
-  public RobotContainer() {
-    
+  public RobotContainer() throws IOException {
+
     // Configure the button bindings
     configureButtonBindings();
-    m_drivetrain.setDefaultCommand(new RunCommand(()->
-    m_drivetrain.curvaturedrive(joystick.getY(), 0.3*joystick.getZ(),true),m_drivetrain));
+    
+    m_easyauto1 = new Easyauto1(drivetrain, m_vision);
+    drivetrain.setDefaultCommand(new RunCommand(()->
+    drivetrain.curvaturedrive(joystick.getY(), 0.3*joystick.getZ(),true),drivetrain));
     //m_intake.setDefaultCommand(new Intakecom(m_arm, m_intake,joystick.getRawAxis(3)));
     //m_shooter.setDefaultCommand(new RunCommand(()->m_shooter.stock(),m_shooter));
     m_chooser.addOption("0.2 go 1sec", m_easyauto);
