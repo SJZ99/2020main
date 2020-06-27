@@ -1,6 +1,4 @@
 
-
-
 /*----------------------------------------------------------------------------*/
 /* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
@@ -11,6 +9,7 @@
 package frc.robot.commands.Auto;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
@@ -23,8 +22,7 @@ public class Easyauto1 extends SequentialCommandGroup {
    * Creates a new Easyauto.
    */
   public Easyauto1(Drivetrain drivetrain,Vision vision) {
-    SmartDashboard.putNumber("autoMode", 1);
-
+    super(new InstantCommand(()->SmartDashboard.putString("Auto Mode", "EasyAuto1")));
     
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());

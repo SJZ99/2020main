@@ -1,11 +1,11 @@
 [
   {
     "name": "7636_2020_2.0 (in project 7636_2020_2.0)",
-    "file": "C:\\Users\\9987j\\Desktop\\vscode-workSpace\\7636_2020_2.0\\build\\libs\\7636_2020_2.0.jar",
+    "file": "C:\\Users\\9987j\\Desktop\\7636_2020_2.0\\build\\libs\\7636_2020_2.0.jar",
     "extensions": [
-      "C:\\Users\\9987j\\Desktop\\vscode-workSpace\\7636_2020_2.0\\build\\tmp\\expandedArchives\\halsim_gui-2020.3.2-windowsx86-64.zip_45369a593bb959ce657791ae7ab7334a\\windows\\x86-64\\shared\\halsim_gui.dll"
+      "C:\\Users\\9987j\\Desktop\\7636_2020_2.0\\build\\tmp\\expandedArchives\\halsim_gui-2020.3.2-windowsx86-64.zip_45369a593bb959ce657791ae7ab7334a\\windows\\x86-64\\shared\\halsim_gui.dll"
     ],
-    "librarydir": "C:\\Users\\9987j\\Desktop\\vscode-workSpace\\7636_2020_2.0\\build\\tmp\\jniExtractDir",
+    "librarydir": "C:\\Users\\9987j\\Desktop\\7636_2020_2.0\\build\\tmp\\jniExtractDir",
     "mainclass": "frc.robot.Main"
   }
 ]

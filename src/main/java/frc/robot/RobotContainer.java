@@ -51,9 +51,9 @@ public class RobotContainer {
   private final Joystick         joystick           = new Joystick(0);
   private final Joystick         drivestation       = new Joystick(2);
   private final SendableChooser<Command> m_chooser = new SendableChooser<>();
-  //private final Easyauto  m_easyauto  = new  Easyauto(m_turret,m_drivetrain,m_vision,m_intake,m_shooter,m_aimer,m_arm);
-  //private final Easyauto1 m_easyauto1 = new Easyauto1(m_drivetrain,m_vision);
-  //private final Easyauto2 m_easyauto2 = new Easyauto2(m_shooter,m_drivetrain,m_vision);
+  private final Easyauto  m_easyauto  = new  Easyauto(m_turret,m_drivetrain,m_vision,m_intake,m_shooter,m_aimer,m_arm);
+  private final Easyauto1 m_easyauto1 = new Easyauto1(m_drivetrain,m_vision);
+  private final Easyauto2 m_easyauto2 = new Easyauto2(m_shooter,m_drivetrain,m_vision);
 
   public RobotContainer() {
     
@@ -61,16 +61,17 @@ public class RobotContainer {
     configureButtonBindings();
     m_drivetrain.setDefaultCommand(new RunCommand(()->
     m_drivetrain.curvaturedrive(joystick.getY(), 0.3*joystick.getZ(),true),m_drivetrain));
-   // m_intake.setDefaultCommand(new Intakecom(m_arm, m_intake,joystick.getRawAxis(3)));
+    //m_intake.setDefaultCommand(new Intakecom(m_arm, m_intake,joystick.getRawAxis(3)));
     //m_shooter.setDefaultCommand(new RunCommand(()->m_shooter.stock(),m_shooter));
-    //m_chooser.addOption("Simple AutoUP", m_easyauto);
-    //m_chooser.addOption("Simple AutoMID", m_easyauto1);
-    //m_chooser.addOption("Simple AutoDOWN", m_easyauto2);
-    m_chooser.addOption("Simple AutoDrive", new InstantCommand(()-> m_drivetrain.drivedist(2),m_drivetrain));
+    m_chooser.addOption("0.2 go 1sec", m_easyauto);
+    m_chooser.addOption("nothing haha", m_easyauto1);
+    m_chooser.addOption("shoot & drive", m_easyauto2);
+    //m_chooser.addOption("Simple AutoDrive", new InstantCommand(()-> m_drivetrain.drivedist(2),m_drivetrain));
 
 
     // Put the chooser on the dashboard
     Shuffleboard.getTab("Autonomous").add(m_chooser);
+    
   }
 
   /**
@@ -99,7 +100,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return new Easyauto2(m_shooter,m_drivetrain,m_vision);
+    // An ExampleCommand will run in autonomous //new Easyauto2(m_shooter,m_drivetrain,m_vision);
+    return m_chooser.getSelected();
   }
 }

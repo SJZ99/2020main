@@ -37,10 +37,9 @@ public class Easyauto extends SequentialCommandGroup {
    * Creates a new Easyauto.
    */
   public Easyauto(Turret turret,Drivetrain drivetrain,Vision vision,Intake intake,Shooter shooter,Aimer aimer,Arm arm) {
-
-
     super(
-      new ParaShot(turret,vision,aimer,shooter),
+      new InstantCommand(()->SmartDashboard.putString("Auto Mode", "EasyAuto")),
+      // new ParaShot(turret,vision,aimer,shooter),
       new RunCommand(()->drivetrain.curvaturedrive(0.2, 0, false),drivetrain).withTimeout(1)
       //new InstantCommand(()->intake.intake(),intake),
     ///  new InstantCommand(()->arm.armdown(),arm),
