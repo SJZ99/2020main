@@ -73,7 +73,7 @@ public class Aimer extends SubsystemBase {
 
   public double getunit(){
     if (Dist>600){
-      unit= 11200+100*(Dist-600/50);
+      unit= 11200+100*(Dist-600)/50;
     }else if(Dist>500){
       unit=11000+200*(Dist-500)/50;
     }

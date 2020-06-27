@@ -23,7 +23,7 @@ public class AutoShot extends SequentialCommandGroup {
     // super(new FooCommand(), new BarCommand());
     super(
       new StartEndCommand(()->shooter.flywheelspinup(12000), ()->shooter.widein(),shooter).withInterrupt(()->shooter.getflywheelspeed()>11500),
-      new StartEndCommand(()->shooter.fastconveyor(),()->shooter.flywheelstop(), shooter).withTimeout(2)
+      new StartEndCommand(()->shooter.fastconveyor(),()->shooter.flywheelstop(), shooter).withTimeout(3)
       );
   }
 }

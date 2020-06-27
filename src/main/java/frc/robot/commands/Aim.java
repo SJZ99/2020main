@@ -44,8 +44,8 @@ public class Aim extends CommandBase {
   @Override
   public void execute() {
    // SmartDashboard.putNumber("ㄏ", 22);
-  //  drivetrainsub.di  staim(visionsub.getDisterr());
- // 
+   // drivetrainsub.di  staim(visionsub.getDisterr());
+   // 
     x=visionsub.getx();
     SmartDashboard.putNumber("getx", x);
     turretsub.turretaim(x);
