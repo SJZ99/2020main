@@ -44,6 +44,7 @@ public class Easyauto extends SequentialCommandGroup {
 
 
       super(
+        new InstantCommand(()-> SmartDashboard.putNumber("autoMode", 0)),
         new Aim(turret, vision).withTimeout(1),
         new DistShooter(shooter).withTimeout(4),
         new InstantCommand(()->intake.intake(),intake),

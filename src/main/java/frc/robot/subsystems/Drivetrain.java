@@ -122,7 +122,7 @@ public class Drivetrain extends SubsystemBase {
     // return Rotation2d.fromDegrees(-ahrs.getAngle());
   }
 
-  public void Trainit(String path) throws IOException {
+  public void trajectoryInit(String path) throws IOException {
     reset();
     setOdmetry(TrajectoryMaker.getTrajectory(path).getInitialPose());
     SmartDashboard.putNumber("TotalTime", TrajectoryMaker.getTrajectory(path).getTotalTimeSeconds());

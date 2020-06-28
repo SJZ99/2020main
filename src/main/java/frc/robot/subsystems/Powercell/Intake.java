@@ -24,10 +24,10 @@ public class Intake extends SubsystemBase {
     
     intake.configSupplyCurrentLimit(supplyCurrentLimitConfiguration);
   }
-  public  void intake() {
+  public void intake() {
     intake.set(ControlMode.PercentOutput,1);
   }
-  public  void intakestop() {
+  public void intakestop() {
     intake.set(ControlMode.PercentOutput,0);
   }
   @Override

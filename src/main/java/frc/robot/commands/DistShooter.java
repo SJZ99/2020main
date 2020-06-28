@@ -49,7 +49,7 @@ public class DistShooter extends CommandBase {
       m_shooter.flywheelspinup(17000);
       m_shooter.longconveyor();
       //m_shooter.widein();
-      SmartDashboard.putString("FlyWheelstatus", "longflywheelSpin");
+      SmartDashboard.putString("FlyWheelstatus", "flywheelSpin to 17000");
     }
   }
 

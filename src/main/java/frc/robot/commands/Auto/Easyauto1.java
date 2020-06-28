@@ -23,11 +23,7 @@ public class Easyauto1 extends SequentialCommandGroup {
    * Creates a new Easyauto.
    */
   public Easyauto1(Drivetrain drivetrain,Vision vision) {
-    SmartDashboard.putNumber("autoMode", 1);
-
-    
-    // Add your commands in the super() call, e.g.
-    // super(new FooCommand(), new BarCommand());
+    // Add your commands in the super() call
     /*
     super(
     new Aim(powercell, vision, drivetrain),

@@ -1,8 +1,7 @@
 {
   "lengthUnit": "Meter",
-  "exportUnit": "Always Meters",
-  "maxVelocity": 2.1,
-  "maxAcceleration": 0.87,
+  "maxVelocity": 0.2,
+  "maxAcceleration": 0.1,
   "wheelBase": 0.74,
   "gameName": "Infinite Recharge",
   "outputDir": "../src/main/deploy"

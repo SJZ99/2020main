@@ -8,6 +8,8 @@
 
 package frc.robot.commands.Auto;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import frc.robot.commands.Aim;
@@ -27,8 +29,9 @@ public class Easyauto2 extends SequentialCommandGroup {
     // super(new FooCommand(), new BarCommand());
     
     super(
-    new StartEndCommand(()->drivetrain.drivedist(1),()->drivetrain.drivedist(0),
-    drivetrain).withInterrupt(() -> drivetrain.drivedistend()));
+      new InstantCommand(()->SmartDashboard.putNumber("autoMode", 2)),    
+      new StartEndCommand(()->drivetrain.drivedist(1),()->drivetrain.drivedist(0),
+      drivetrain).withInterrupt(() -> drivetrain.drivedistend()));
     
   }
 }

@@ -22,6 +22,8 @@ import frc.robot.Constants.Button;
 import frc.robot.commands.Aim;
 import frc.robot.commands.DistShooter;
 import frc.robot.commands.Auto.Easyauto;
+import frc.robot.commands.Auto.Easyauto1;
+import frc.robot.commands.Auto.Easyauto2;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
@@ -50,8 +52,8 @@ public class RobotContainer {
   private final Climber          m_climber            = new Climber();
   private final SendableChooser<Command> m_chooser = new SendableChooser<>();
   private final Easyauto  m_easyauto  = new  Easyauto(m_turret,m_drivetrain,m_vision,m_intake,m_shooter,m_aimer,m_arm);
-  //private final Easyauto1 m_easyauto1 = new Easyauto1(m_drivetrain,m_vision);
-  //private final Easyauto2 m_easyauto2 = new Easyauto2(m_shooter,m_drivetrain,m_vision);
+  private final Easyauto1 m_easyauto1 = new Easyauto1(m_drivetrain,m_vision);
+  private final Easyauto2 m_easyauto2 = new Easyauto2(m_shooter,m_drivetrain,m_vision);
 
   public RobotContainer() {
     
@@ -60,7 +62,9 @@ public class RobotContainer {
     m_drivetrain.setDefaultCommand(new RunCommand(()->
     m_drivetrain.curvaturedrive(joystick.getY(), 0.3*joystick.getZ(),true),m_drivetrain));
     m_chooser.addOption("Simple AutoDrive", new InstantCommand(()-> m_drivetrain.drivedist(2),m_drivetrain));
-
+    m_chooser.addOption("close chanch draw ball", m_easyauto);
+    m_chooser.addOption("empty", m_easyauto1);
+    m_chooser.addOption("only move 1(emergency)", m_easyauto2);
 
     // Put the chooser on the dashboard
     Shuffleboard.getTab("Autonomous").add(m_chooser);
@@ -97,6 +101,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_easyauto;
+    return m_chooser.getSelected();
   }
 }
