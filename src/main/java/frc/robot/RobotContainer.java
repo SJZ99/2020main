@@ -56,7 +56,7 @@ public class RobotContainer {
   private final Joystick drivestation = new Joystick(2);
   private final SendableChooser<Command> m_chooser = new SendableChooser<>();
   private final Easyauto m_easyauto = new Easyauto(m_turret, drivetrain, m_vision, m_intake, m_shooter, m_aimer, m_arm);
-  private final Easyauto1 m_easyauto1;
+  private final Easyauto1 m_easyauto1 = new Easyauto1(drivetrain, m_vision);
   private final Easyauto2 m_easyauto2 = new Easyauto2(m_shooter, drivetrain, m_vision);
 
   public RobotContainer() throws IOException {
@@ -64,7 +64,6 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     
-    m_easyauto1 = new Easyauto1(drivetrain, m_vision);
     drivetrain.setDefaultCommand(new RunCommand(()->
     drivetrain.curvaturedrive(joystick.getY(), 0.3*joystick.getZ(),true),drivetrain));
     //m_intake.setDefaultCommand(new Intakecom(m_arm, m_intake,joystick.getRawAxis(3)));

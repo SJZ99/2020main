@@ -19,16 +19,19 @@ public class PathMaker extends SubsystemBase {
   /**
    * Creates a new PathMaker.
    */
+  static Trajectory trajectory = null;
   public PathMaker() {
 
   }
-  public static Trajectory getTrajectory(String path) throws IOException {
+
+  public static Trajectory getTrajectory(String path) {
+    try {
       Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(path);
-      Trajectory trajectory;
       trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-      return trajectory;
-  
-    
+    } catch (IOException g) {
+      System.out.print(g.getMessage());
+    }
+    return trajectory;
   }
 
   @Override
